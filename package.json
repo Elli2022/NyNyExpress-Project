@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "tailwind": "npx tailwindcss -i ./assets/tailwind.css -o ./public/output.css --watch",
     "start": "nodemon app.js",
     "lorem": "console.log('hej')"
   },

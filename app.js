@@ -88,6 +88,11 @@ app.listen(port, () => {
 app.get("/logged-in", (req, res) => {
   res.sendFile('Logged In...');
 });
+
+app.get("/login", (req, res) => {
+  res.render('login');
+});
+
 //Post
 app.post("/login", (req, res) => {
   console.log(req.body);
