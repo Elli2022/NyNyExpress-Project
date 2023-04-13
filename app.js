@@ -64,7 +64,8 @@ app.get("/api/getuser", (req, res) => {
 app.get("/logged-in", (req, res) => {
   if(req.session.authenticated){
     //if the user is authenticated, render the dashboard
-    res.sendFile(__dirname + "/views/html/logged-in.html");
+    res.render("logged-in", data);
+    // res.sendFile(__dirname + "/views/html/logged-in.html");
   }else{
     res.redirect("/login");
   }
