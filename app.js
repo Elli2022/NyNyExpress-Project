@@ -11,6 +11,12 @@ let bodyParser = require("body-parser");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+//Set EJS as the view engine
+app.set('view engine', 'ejs');
+
+//Specify the location of the views folder
+app.set('views', './views');
+
 app.use(
   session({
     secret: 'my-secret',
@@ -53,7 +59,7 @@ app.get("/api/getuser", (req, res) => {
 app.get("/logged-in", (req, res) => {
   if(req.session.authenticated){
     //if the user is authenticated, render the dashboard
-    res.sendFile(__dirname + "/views/logged-in.html");
+    res.sendFile(__dirname + "/views/html/logged-in.html");
   }else{
     res.redirect("/login");
   }
@@ -61,7 +67,7 @@ app.get("/logged-in", (req, res) => {
 
 //Skapar en route till INDEX.HTML
 app.get("/random", (req, res) => {
-  res.sendFile(__dirname + "/views/index.html");
+  res.sendFile(__dirname + "/views/html/index.html");
 });
 
 //Lyssnar
@@ -98,5 +104,5 @@ app.post("/login", (req, res) => {
 //GET (ROUTE TILL LOGIN.HTML)
 app.get("/login", (req, res) => {
   console.log(req.body);
-  res.sendFile(__dirname + "/views/login.html");
+  res.sendFile(__dirname + "/views/html/login.html");
 });
