@@ -49,7 +49,12 @@ app.use(express.static("public"));
 
 //Default port 3000
 app.get("/", (req, res) => {
-  res.send("Hello World! TEST TEST");
+  const data = {
+    title:"Welcome",
+    style: "color:green",
+  }
+  res.render("index", data);
+  // res.sendFile("Hello World! TEST TEST");
 });
 
 app.get("/api/getuser", (req, res) => {
