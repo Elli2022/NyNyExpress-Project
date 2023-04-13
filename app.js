@@ -63,6 +63,10 @@ app.get("/api/getuser", (req, res) => {
 
 app.get("/logged-in", (req, res) => {
   if(req.session.authenticated){
+    //if the user is authenticated
+    const data = {
+      name: "Elli"
+    }
     //if the user is authenticated, render the dashboard
     res.render("logged-in", data);
     // res.sendFile(__dirname + "/views/html/logged-in.html");
