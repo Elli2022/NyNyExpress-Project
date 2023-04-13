@@ -65,7 +65,8 @@ app.get("/logged-in", (req, res) => {
   if(req.session.authenticated){
     //if the user is authenticated
     const data = {
-      name: "Elli"
+      name: "Elli",
+      style: "color: red"
     }
     //if the user is authenticated, render the dashboard
     res.render("logged-in", data);
