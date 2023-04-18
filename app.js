@@ -113,7 +113,6 @@ app.post("/login", (req, res) => {
     else{
       res.send('Found no users');
     }
-    console.log(results);
   });
 })
 
