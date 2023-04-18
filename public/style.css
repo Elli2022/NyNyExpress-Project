@@ -1,3 +1,83 @@
-body{
-    background-color: aquamarine;
-}
+/* Styling for the body */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    }
+    
+    /* Styling for the background */
+    .bg-grey-100 {
+    background-color: purple;
+    }
+    
+    /* Styling for the heading */
+    h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    }
+    
+    /* Styling for the container */
+    .flex {
+    display: flex;
+    }
+    
+    .items-center {
+    align-items: center;
+    }
+    
+    .justify-center {
+    justify-content: center;
+    }
+    
+    .h-screen {
+    height: 100vh;
+    }
+    
+    .w-full {
+    width: 100%;
+    }
+    
+    /* Styling for the login form */
+    .shadow-xl {
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    }
+    
+    .rounded-2xl {
+    border-radius: 2rem;
+    }
+    
+    .p-10 {
+    padding: 2.5rem;
+    }
+    
+    form {
+    display: flex;
+    flex-direction: column;
+    }
+    
+    input[type="text"] {
+    border: 2px solid transparent;
+    border-color: orange;
+    border-radius: 0.5rem;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    }
+    
+    button[type="submit"] {
+    background-color: lightgreen;
+    border: none;
+    border-radius: 0.5rem;
+    color: #fff;
+    font-weight: bold;
+    padding: 0.75rem;
+    transition: background-color 0.3s ease-in-out;
+    }
+    
+    button[type="submit"]:hover {
+    background-color: green;
+    }
+    
+    
+    
+    
