@@ -105,6 +105,7 @@ app.post("/login", (req, res) => {
     if (error) throw error;
 
     if(results.length > 0){
+      console.log(results[0].name);
       // res.send('Found' + results.length + 'users');
       req.session.authenticated = true;
       res.redirect(`/logged-in`);
