@@ -57,15 +57,31 @@ app.get("/", (req, res) => {
   // res.sendFile("Hello World! TEST TEST");
 });
 
-app.get("/api/getuser", (req, res) => {
-  res.json('{"name": "Elli"}');
-});
+app.get("/api/getfavoritecolor", (req, res) => {
+  if(req.session.authenticated && req.session.username){
+  connection.query(`SELECT * FROM users WHERE name = '${req.session.username}'` , function (error, results, fields) {
+
+    if (error) throw error;
+
+    if(results.length > 0){
+      res.json(`{"color": ${results[0].favorite_color}}`);
+    }
+    else{
+      // res.send('Found no users');
+    }
+  });
+
+}else{
+  res.redirect('/login');
+}
+})
 
 app.get("/logged-in", (req, res) => {
   if(req.session.authenticated){
     //if the user is authenticated
+    const username = req.session.username;
     const data = {
-      name: "Elli",
+      name: username,
       style: "color: red"
     }
     //if the user is authenticated, render the dashboard
@@ -106,6 +122,7 @@ app.post("/login", (req, res) => {
 
     if(results.length > 0){
       console.log(results[0].name);
+      req.session.username = results[0].name;
       // res.send('Found' + results.length + 'users');
       req.session.authenticated = true;
       res.redirect(`/logged-in`);
