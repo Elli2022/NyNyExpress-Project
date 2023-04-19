@@ -1,17 +1,24 @@
-<%- include('partials/head', {title: "Logged-in"} ); %>.
-    <h1>
-        GRATTIS <span style="<%= style %>"> <%= name %> </span> DU ÄR INLOGGAD
-      </h1>
-    <button class="mt-8 px-4 py-2 bg-blue-300 text-white" onclick="getUserFavoriteColor()" type="submit">Hämta favortifärg
+<%- include('partials/head', {title: 'Välkommen'} ); %>
+
+    <h1>Grattis!!! <span style="<%= style %>"> <%= name %> </span> du är inloggad!</h1>
+
+    <div>
+        <p class="mt-10">Lotenetur vitae facere error iusto molestiae accusamus magni delectus aliquid quasi quisquam qui iure odit alias voluptatem esse? Qui, adipisci.</p>
+    </div>
+
+    <button class="mt-8 px-4 py-2 bg-blue-300 text-white" onclick="getUserFavoriteColor()">Hämta favoritfärg</button>
+
     <script>
-        function getUserFavoriteColor() {
+        function getUserFavoriteColor(){
             fetch('http://localhost:3000/api/getfavoritecolor')
-            .then(data=> {
+            .then(data => {
                 return data.json();
             })
-            .then(json =>{
+            .then(json => {
                 console.log(json);
             });
         }
     </script>
-<%- include('partials/footer'); %>.
+
+
+<%- include('partials/footer'); %>

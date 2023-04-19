@@ -1,140 +1,142 @@
-const express = require("express");
-const app = express();
-const port = 3000;
+const express = require('express')
+const app = express()
+const port = 3000
 const session = require('express-session');
-var mysql = require("mysql");
+var mysql  = require('mysql');
 
-app.use(express.static("public"));
+app.use(express.static('public'));
 
-//För postman
-let bodyParser = require("body-parser");
+let bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-//Set EJS as the view engine
+// Set EJS as the view engine
 app.set('view engine', 'ejs');
 
-//Specify the location of the views folder
+// Specify the location of the views folder
 app.set('views', './views');
 
+
 app.use(
-  session({
-    secret: 'my-secret',
-    resave: false,
-    saveUninitialized: true,
-  })
+    session({
+      secret: 'my-secret',
+      resave: false,
+      saveUninitialized: true
+    })
 );
 
-//Database connection
+// Database connection
 var connection = mysql.createConnection({
-  host: "localhost",
-  port: "8889",
-  user: "admin",
-  password: "password",
-  database:'express_demo'
+  host     : 'localhost',
+  port     : '3306',
+  user     : 'root',
+  password : 'root',
+  database : 'express_demo'
 });
 
-connection.connect(function (err) {
-  if (err) {
-    console.error("error connecting: " + err.stack);
-    return;
-  }
-  console.log("connected as id " + connection.threadId);
-});
-
-
-
-//Letar efter statiska filer i public mappen
-app.use(express.static("public"));
-
-//Default port 3000
-app.get("/", (req, res) => {
-  const data = {
-    title:"Welcome",
-    style: "color:green",
-  }
-  res.render("index", data);
-  // res.sendFile("Hello World! TEST TEST");
-});
-
-app.get("/api/getfavoritecolor", (req, res) => {
-  if(req.session.authenticated && req.session.username){
-  connection.query(`SELECT * FROM users WHERE name = '${req.session.username}'` , function (error, results, fields) {
-
-    if (error) throw error;
-
-    if(results.length > 0){
-      res.json(`{"color": ${results[0].favorite_color}}`);
+connection.connect(function(err) {
+    if (err) {
+        console.error('error connecting: ' + err.stack);
+        return;
     }
-    else{
-      // res.send('Found no users');
-    }
-  });
 
-}else{
-  res.redirect('/login');
-}
-})
+    console.log('connected as id ' + connection.threadId);
+});
 
-app.get("/logged-in", (req, res) => {
-  if(req.session.authenticated){
-    //if the user is authenticated
-    const username = req.session.username;
+
+app.get('/', (req, res) => {
     const data = {
-      name: username,
-      style: "color: red"
+        title: "Welcome",
+        style: "color: red;"
     }
-    //if the user is authenticated, render the dashboard
-    res.render("logged-in", data);
-  }else{
-    res.redirect("/login");
-  }
-});
-
-//Skapar en route till INDEX.HTML
-app.get("/random", (req, res) => {
-  res.sendFile(__dirname + "/views/html/index.html");
-});
-
-//Lyssnar
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
-});
-
-app.get("/logged-in", (req, res) => {
-  res.sendFile('Logged In...');
-});
-
-app.get("/login", (req, res) => {
-  res.render('login');
-});
-
-//Post
-app.post("/login", (req, res) => {
-  console.log(req.body);
-  const email = req.body.email;
-  const password = req.body.password;
-  // console.log(email);
-  // console.log(password);
-
-  connection.query(`SELECT * FROM users WHERE email = '${email}' AND password = '${password}' ` , function (error, results, fields) {
-    if (error) throw error;
-
-    if(results.length > 0){
-      console.log(results[0].name);
-      req.session.username = results[0].name;
-      // res.send('Found' + results.length + 'users');
-      req.session.authenticated = true;
-      res.redirect(`/logged-in`);
-    }
-    else{
-      res.send('Found no users');
-    }
-  });
+    res.render('index', data)
+    // res.sendFile(__dirname + '/views/html/index.html');
 })
 
-//GET (ROUTE TILL LOGIN.HTML)
-app.get("/login", (req, res) => {
-  console.log(req.body);
-  res.sendFile(__dirname + "/views/html/login.html");
+app.get('/api/getfavoritecolor', (req, res) => {
+    if (req.session.authenticated && req.session.username) {
+
+        connection.query(`SELECT * FROM users WHERE name='${req.session.username}'`, function (error, results, fields) {
+            if (error) throw error;
+
+            if(results.length > 0){
+                res.json(`{"color": ${results[0].favorite_color}}`);
+            }else{
+                // res.send('Found no users')
+            }
+
+        });
+
+    }else {
+        res.redirect('/login');
+    }
+})
+
+
+app.get('/logged-in', (req, res) => {
+    if (req.session.authenticated && req.session.username) {
+        // If the user is authenticated
+        const username = req.session.username;
+        const data = {
+            name: username,
+            style: "color: red;"
+        }
+        res.render('logged-in', data)
+    } else {
+        res.redirect('/login');
+    }
+})
+
+app.get('/login', (req, res) => {
+    res.render('login')
+})
+
+app.post('/login', (req, res) => {
+    const email = req.body.email;
+    const password = req.body.password;
+
+    connection.query(`SELECT * FROM users WHERE email='${email}' AND password='${password}'`, function (error, results, fields) {
+        if (error) throw error;
+
+        if(results.length > 0){
+            console.log(results[0].name)
+            // res.send('Found ' + results.length + ' users')
+            req.session.username = results[0].name;
+            req.session.authenticated = true;
+            res.redirect('/logged-in');
+        }else{
+            res.send('Found no users')
+        }
+
+    });
+
+})
+
+
+// SIGN UP
+app.get('/signup', (req, res) => {
+    res.render('signup')
+})
+
+// Route for creating a new user
+app.post('/users', (req, res) => {
+    const { name, email, password } = req.body;
+    const user = { name, email, password };
+
+    // Insert new user into MySQL database
+    connection.query('INSERT INTO users SET ?', user, (err, results) => {
+        if (err) {
+            console.error('Error creating new user: ', err);
+            res.status(500).send('Error creating new user');
+            return;
+        }
+        console.log('New user created with id: ', results.insertId);
+        req.session.username = user.name;
+        req.session.authenticated = true;
+        res.redirect('/logged-in');
+    });
 });
+
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`)
+})
