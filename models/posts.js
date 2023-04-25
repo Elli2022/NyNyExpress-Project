@@ -10,20 +10,22 @@ class Post {
     }
 
     static async getAll() {
-        db.query('SELECT * FROM posts', function (error, results, fields) {
-            if (error) throw error;
-
-            if(results.length > 0){
-                console.log(results)
-                return results
-            }else{
-                return Error('None found')
-            }
-
+        return new Promise((resolve, reject) => {
+            db.query('SELECT * FROM posts', function (error, results, fields) {
+                if (error) {
+                    reject(error);
+                } else {
+                    if (results.length > 0) {
+                        console.log(results);
+                        resolve(results);
+                    } else {
+                        reject(new Error('None found'));
+                    }
+                }
+            });
         });
     }
 
 }
-
 
 module.exports = Post;

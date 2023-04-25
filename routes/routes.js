@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const connection = require('../db_connection');
+const connection = require('./../db_connection');
 
 router.get('/', (req, res) => {
     const data = {
@@ -10,10 +10,6 @@ router.get('/', (req, res) => {
     res.render('index', data)
 })
 
-router.get('/test', (req, res) => {
-   
-    res.send('test');
-})
 
 router.get('/logged-in', (req, res) => {
     if (req.session.authenticated && req.session.username) {
@@ -31,16 +27,15 @@ router.get('/logged-in', (req, res) => {
 
 router.get('/logout', (req, res) => {
     if (req.session.authenticated && req.session.username) {
-        req.session.authenticated = false;
-        req.session.ausername = null;
-        res.redirect('/')
+      req.session.authenticated = false;
+      req.session.username = null
+      res.redirect('/')
     } else {
-        res.redirect('/login');
+      res.redirect('/login')
     }
-})
-
+  })
 router.get('/login', (req, res) => {
-    res.send('login')
+    res.render('login')
 })
 
 router.post('/login', (req, res) => {
@@ -63,7 +58,6 @@ router.post('/login', (req, res) => {
     });
 
 })
-
 
 // SIGN UP
 router.get('/signup', (req, res) => {

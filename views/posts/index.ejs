@@ -1,3 +1,14 @@
-<%- include('partials/head', {title: "Login"}); %>
+<%- include('./../partials/head', {title: "Login"}); %>
 
-<%- include('partials/footer'); %>
+<h1>All Posts</h1>
+    <ul>
+        <% posts.forEach(post => { %>
+            <li>
+                <h2 class="font-bold"><%= post.title %></h2>
+                <p class="mt-3"><%= post.content %></p>
+                <p class="mt-3"><%= post.created_at %></p>
+                <p class="font-bold">Author: <%= post.author %></p>
+            </li>
+        <% }); %>
+    </ul>
+<%- include('./../partials/footer'); %>
