@@ -34,6 +34,14 @@ app.use(
 const router = require('./routes/routes');
 app.use(router);
 
+//Controllers
+const posts = require('./controllers/posts');
+app.use(router);
+
+
+//API Endpoints
+const api = require('./api/endpoints');
+app.use(api);
 
 app.get('/api/getfavoritecolor', (req, res) => {
     if (req.session.authenticated && req.session.username) {
