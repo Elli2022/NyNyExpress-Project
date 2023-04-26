@@ -31,12 +31,15 @@ router.post('/posts', async (req, res) =>{
         console.log('post created');
         console.log(post);
 
-        res.redirect('posts/');
-    }
-    catch (err){
+        res.redirect('/posts');
+    }catch (err){
         console.log(err);
     }
 });
 
+
+//READ
+//UPDATE
+//DELETE
 //Create a new post
 
