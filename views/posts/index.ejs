@@ -1,19 +1,22 @@
 <%- include('./../partials/head', {title: "Login"}); %>
 
 <h1 class="font-bold">All Posts</h1>
-    <ul>
-        <% posts.forEach(post => { %>
-            <div>
-                <h2 class="font-bold"><%= post.title %></h2>
-                
-                <p class="mt-1 text-sm text-gray-500"><%= moment(post.created_at).fromNow()%></p>
+<ul>
+  <% posts.forEach(post => { %>
+  <div class="mt-10">
+    <a href="/posts/slug/<%= post.slug %>">
+      <h2 class="text-xl font-bold"><%= post.title %></h2>
+    </a>
+    <p class="mt-1 text-sm text-gray-500">
+      <%= moment(post.created_at).fromNow()%>
+    </p>
 
-                <!-- <p class="mt-1 text-sm text-gray-500"><%= moment(post.created_at).format('YY-DD-MM')%></p> -->
+    <!-- <p class="mt-1 text-sm text-gray-500"><%= moment(post.created_at).format('YY-DD-MM')%></p> -->
 
-                <p class="mt-3"><%= post.content %></p>
+    <p class="mt-3"><%= post.content %></p>
 
-                <p class="font-bold">Author: <%= post.author %></p>
-            </div>
-        <% }); %>
-    </ul>
+    <p class="font-bold">Author: <%= post.author %></p>
+  </div>
+  <% }); %>
+</ul>
 <%- include('./../partials/footer'); %>

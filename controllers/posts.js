@@ -38,7 +38,19 @@ router.post('/posts', async (req, res) =>{
 });
 
 
+
 //READ
+router.get('/posts/slug/:slug', async (req, res) => {
+const slug = req.params.slug;
+try {
+    const [post] = await Post.getBySlug(slug);
+
+    res.render('posts/show', { post: post });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+
+});
 //UPDATE
 //DELETE
 //Create a new post

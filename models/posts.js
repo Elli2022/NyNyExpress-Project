@@ -9,6 +9,26 @@ class Post {
     
     }
 
+    static async getBySlug(slug) {
+        console.log('slug');
+        console.log(slug);
+        return new Promise((resolve, reject) => {
+            db.query(`SELECT * FROM posts WHERE slug='${slug}'`,
+            function (error, results, fields) {
+                if (error) {
+                    reject(error);
+                } else {
+                    if (results.length > 0) {
+                       
+                        resolve(results);
+                    } else {
+                        reject(new Error('None found'));
+                    }
+                }
+            });
+        });
+    }
+
     static async getAll() {
         return new Promise((resolve, reject) => {
             db.query('SELECT * FROM posts', function (error, results, fields) {
@@ -25,6 +45,7 @@ class Post {
             });
         });
     }
+
 
 
     async create() {
