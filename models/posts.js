@@ -2,11 +2,11 @@ const db = require('./../db_connection');
 
 class Post {
 
-    constructor({id, title, content, author}) {
+    constructor({id, title, content}) {
         this.id = id;
         this.title = title;
         this.content = content;
-        this.author = author;
+    
     }
 
     static async getAll() {
@@ -26,6 +26,27 @@ class Post {
         });
     }
 
+
+    async create() {
+        console.log('Post model create')
+        const sql = `INSERT INTO posts
+        (user_id, slug, title, content)
+        VALUES
+        (?,?,?, ?)
+        `;
+
+        const values = [1, 'slug-slug-slug', this.title, this.content]
+        var self = this;
+        const result = await db.query(sql, values, function (error, results, fields) {
+            if (error) throw error;
+            console.log('this:');
+            console.log(self);
+            self.id = results.insertId;
+
+        });
+        console.log(result)
+    }
 }
 
 module.exports = Post;
+

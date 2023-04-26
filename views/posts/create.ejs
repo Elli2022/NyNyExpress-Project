@@ -1,0 +1,11 @@
+<%- include('./../partials/head', {title: "New Post"}); %>
+
+<form action="/posts" method="post">
+    <input type="text" name="title">
+    <textarea name="content" id="" cols="30" rows="10"></textarea>
+    <button type="submit">Skicka</button>
+</form>
+
+
+
+<%- include('./../partials/footer'); %>

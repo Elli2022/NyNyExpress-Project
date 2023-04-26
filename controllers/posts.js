@@ -13,3 +13,30 @@ router.get('/posts', async (req, res) => {
 });
 
 module.exports = router;
+
+
+//CREATE
+router.get('/posts/create',  (req, res) => {
+    res.render('posts/create')
+});
+
+router.post('/posts', async (req, res) =>{
+    console.log(req.body.title);
+    console.log(req.body.content);
+    try{
+        const title = req.body.title;
+        const content = req.body.content;
+        const post = new Post({title,content});
+        await post.create();
+        console.log('post created');
+        console.log(post);
+
+        res.redirect('posts/');
+    }
+    catch (err){
+        console.log(err);
+    }
+});
+
+//Create a new post
+
